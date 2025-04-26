@@ -1,0 +1,95 @@
+Creating EC2 Instance
+
+Ec2 Dashboard 
+       1. select the region 
+       2. Launch instance-- 
+	         i. Name, 
+			 ii. Select the OS Image(Ubuntu 20.04- free tier), 
+			 iii. select instance type -- t2.micro, 
+			 iv.  key pair -- create key pair--- name for key pair, select ppk/pem key -- select create key button 
+	                 v. enable--  Allow HTTP traffic from the internet
+			 vi. select Launch instance button 
+			 vii. View launch instance button 
+			 
+			 
+=================================================================
+Connect to your Ec2 Instance using putty or CLoudshell
+
+To connect with Putty(Using PPK key)
+select the instance created 
+			 copy the public ip address 
+			 open putty window in your laptop -- 
+			           host name -- public ip address 
+					   connection --> ssh--> auth --> browser-- select the key pair downloaded 
+                       user name -- ubuntu
+					   
+					   
+To connect with CLoudshell (Using PEM Key)
+  open cloudshell in new window- upload pem key
+  Select the instance -- select connect - - ssh client -
+  follow the instruction to connect with instance 
+  
+==========================================================================IAM --   IAM user
+          user -- select your username --  security credentials -- add permission policy (AdminsitratorAccess  & AmazonEKSClusterPolicy) -- create access key -- download the csv file 
+
+==========================================================================
+  
+#In the created Ec2 instance terminal install awscli using the below command 
+
+sudo apt update
+sudo apt install awscli -y 
+
+# confire aws to access the other services from ec2 
+
+aws configure 
+
+[access key  and secret key -- take it from the IAM user credentails downloaded 
+region - specify the eks cluster region 
+output format -- (leave it blank)]
+
+ 
+
+
+==========================================================================
+eksctl Installation 
+==================
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+
+sudo mv /tmp/eksctl /usr/local/bin
+
+eksctl version
+
+kubectl installation 
+====================
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.23.6/bin/linux/amd64/kubectl
+
+chmod +x ./kubectl
+
+sudo mv ./kubectl /usr/local/bin/kubectl
+ 
+kubectl version -o json
+
+CLuster creation 
+================
+eksctl create cluster \
+--name my-cluster \
+--region ap-south-1 \
+--nodegroup-name eks-cluster-node-grp1 \
+--node-type t2.medium \
+--nodes 3 \
+--nodes-min 2 --nodes-max 5 \
+--ssh-access \
+--ssh-public-key test-aws \         
+--managed
+
+//create new ssh key
+
+
+
+aws eks --region=ap-south-1 update-kubeconfig --name my-cluster
+
+kubectl get nodes
+
+
+
+# eksctl delete cluster --name my-cluster

@@ -1,0 +1,40 @@
+1) Enabling WSL on Windows 11
+
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+
+Reboot your system to apply the changes.
+
+2) Update WSL to Latest Version
+
+wsl --update
+
+3) Setting WSL 2 as the Default Version
+
+wsl --set-default-version 2
+
+4)  Installing Ubuntu 24.04
+
+wsl --list --online  // This will List available distributions
+
+wsl --install -d Ubuntu-24.04  // This will install Ubuntu 24.04
+
+5) Access and Update Ubuntu 24.04
+
+sudo apt update && sudo apt upgrade -y
+
+6) Managing Linux Distributions
+
+wsl -l -v    // List installed linux distributions
+
+
+wsl --shutdown Ubuntu-24.04    // Shutdown Linux Distributions
+
+wsl -d Ubuntu-24.04                   // Start Linux Distribution
+
+7)  Uninstalling Linux Distributions
+
+wsl --unregister {distribution-name}
+
+Also Remove the Ubuntu 24.04 App.

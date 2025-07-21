@@ -1,15 +1,19 @@
 kubernetes  (minikube-single node) installation 
 
 step 1:
+
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 
 Step 2:
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
+chmod +x /usr/local/bin/minikube
+
 
 Step 3:
 minikube start (If error do the below minikube start)
 or
-minikube start --extra-config=kubeadm.ignore-preflight-errors=NumCPU --force --cpus 1
+#incase not having much resource on vm try below:
+#minikube start --extra-config=kubeadm.ignore-preflight-errors=NumCPU --force --cpus 1
 
 
 Step 4: (kubectl installation from step 4 to step 7)
